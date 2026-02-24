@@ -1,5 +1,3 @@
-import gamesData from './games.json';
-
 const gameGrid = document.getElementById('game-grid');
 const searchInput = document.getElementById('search-input');
 const gameCount = document.getElementById('game-count');
@@ -18,18 +16,27 @@ const toggleFullscreenBtn = document.getElementById('toggle-fullscreen');
 let isFullscreen = false;
 
 // Initialize
-function init() {
+async function init() {
   currentYear.textContent = new Date().getFullYear();
-  renderGames(gamesData);
+  
+  try {
+    const response = await fetch('./src/games.json');
+    const gamesData = await response.json();
+    
+    renderGames(gamesData);
 
-  searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
-    const filtered = gamesData.filter(game => 
-      game.title.toLowerCase().includes(query) || 
-      game.description.toLowerCase().includes(query)
-    );
-    renderGames(filtered);
-  });
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const filtered = gamesData.filter(game => 
+        game.title.toLowerCase().includes(query) || 
+        game.description.toLowerCase().includes(query)
+      );
+      renderGames(filtered);
+    });
+  } catch (error) {
+    console.error('Error loading games data:', error);
+    gameGrid.innerHTML = '<p class="text-center py-10 text-red-500">Failed to load games. Please try again later.</p>';
+  }
 
   closeModalBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => {
