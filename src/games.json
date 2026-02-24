@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": "hallow-knight",
+    "title": "Hallow knight",
+    "description": "An epic action-adventure through a vast ruined kingdom of insects and heroes.",
+    "thumbnail": "https://picsum.photos/seed/hollow/400/300",
+    "iframeUrl": "https://classroom.global.ssl.fastly.net/storage/hk.html"
+  }
+]
