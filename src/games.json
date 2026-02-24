@@ -1,0 +1,44 @@
+[
+  {
+    "id": "2048",
+    "title": "2048",
+    "description": "Join the numbers and get to the 2048 tile!",
+    "thumbnail": "https://picsum.photos/seed/2048/400/300",
+    "iframeUrl": "https://play2048.co/"
+  },
+  {
+    "id": "tetris",
+    "title": "Tetris",
+    "description": "The classic block-stacking puzzle game.",
+    "thumbnail": "https://picsum.photos/seed/tetris/400/300",
+    "iframeUrl": "https://tetris.com/play-tetris"
+  },
+  {
+    "id": "flappy-bird",
+    "title": "Flappy Bird",
+    "description": "Fly through the pipes without hitting them.",
+    "thumbnail": "https://picsum.photos/seed/flappy/400/300",
+    "iframeUrl": "https://flappybird.io/"
+  },
+  {
+    "id": "pacman",
+    "title": "Pac-Man",
+    "description": "Eat all the dots and avoid the ghosts.",
+    "thumbnail": "https://picsum.photos/seed/pacman/400/300",
+    "iframeUrl": "https://www.google.com/logos/2010/pacman10-i.html"
+  },
+  {
+    "id": "snake",
+    "title": "Snake",
+    "description": "Grow your snake by eating food, but don't hit the walls!",
+    "thumbnail": "https://picsum.photos/seed/snake/400/300",
+    "iframeUrl": "https://www.google.com/logos/2010/pacman10-i.html"
+  },
+  {
+    "id": "dino-run",
+    "title": "Dino Run",
+    "description": "The classic offline dinosaur game.",
+    "thumbnail": "https://picsum.photos/seed/dino/400/300",
+    "iframeUrl": "https://chromedino.com/"
+  }
+]
